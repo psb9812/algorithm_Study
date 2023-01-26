@@ -61,6 +61,40 @@ struct org_tree
         cout << manager << " 아래에 " << subordinate << "을(를) 추가했습니다." << endl;
         return true;
     }
+
+    //레벨 순서 순회 구현
+    static void levelOrder(node* start)
+    {
+        //루트 노드가 없으면 함수 리턴
+        if(!start)
+            return;
+        //자식 노드를 넣을 큐 선언
+        queue<node*> q;
+        //최초로 루트 노드를 큐에 넣고
+        q.push(start);
+
+        //한 레벨을 단위로 반복 큐가 전부 빌 때 까지
+        while(!q.empty())
+        {
+            int size = q.size();
+            for(int i = 0; i < size; i++)
+            {
+                //따로 맨 앞에 원소를 저장
+                auto current = q.front();
+                // 맨 앞 원소 제거
+                q.pop();
+                // 맨 앞 원소 출력
+                cout << current->position << ", ";
+                //맨 앞 원소에 자식이 있다면 큐에 저장 해둠
+                if(current->first)
+                    q.push(current->first);
+                if(current->second)
+                    q.push(current->second);
+            }
+            
+            cout << endl;
+        }
+    }
 };
 int main()
 {
@@ -74,6 +108,8 @@ int main()
     tree.addSubordinatte("마케팅부장", "물류팀장");
     tree.addSubordinatte("마케팅부장", "홍보팀장");
     tree.addSubordinatte("부사장", "재무부장");
+
+    org_tree::levelOrder(tree.root);
 
     return 0;
 }
