@@ -62,6 +62,39 @@ struct org_tree
         return true;
     }
 
+    //전위 순회 구현
+    static void preOrder(node* start)
+    {
+        if(!start)
+            return;
+        //먼저 호출
+        cout << start->position << ", ";
+        //재귀적인 호출. 왼쪽 노드가 먼저
+        preOrder(start->first);
+        preOrder(start->second);
+    }
+
+    //중위 순회 구현
+    static void inOrder(node* start)
+    {
+        if(!start)
+            return;
+
+        inOrder(start->first);
+        cout << start->position;
+        inOrder(start->second);
+    }
+
+    //후위 순회 구현
+    static void postOrder(node* start)
+    {
+        if(!start)
+            return;
+        
+        postOrder(start->first);
+        postOrder(start->second);
+        cout << start->position << ", ";
+    }
     //레벨 순서 순회 구현
     static void levelOrder(node* start)
     {
@@ -91,7 +124,7 @@ struct org_tree
                 if(current->second)
                     q.push(current->second);
             }
-            
+
             cout << endl;
         }
     }
